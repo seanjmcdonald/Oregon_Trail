@@ -1,0 +1,124 @@
+<<<<<<< HEAD
+=======
+//got the tree image from https://bestworstthings.files.wordpress.com/2009/06/oregon-trail-hunting-2.jpg
+//https://cdn-images-1.medium.com/max/800/1*z4dr2bxuAmdeSr84KaQMRA.png/
+>>>>>>> 42e8862e30ebd42ceb651c772a4494f2729ce6de
+int window_height=600;
+int window_width=800;
+int window_x=0;
+int window_y=0;
+double window_green=0.0;
+double window_red=0.0;
+double window_blue=0.0;
+int person_height=30;
+int person_width=20;
+int facing_direction=0;
+int movement=10;
+int dir=1;
+int num_bullets=0;
+int bullet_radius=4;
+int fire=0;
+int animal_h=40;
+int animal_w=80;
+
+forward animation shoot(circle bullet_time);
+forward animation move_animal(rectangle animals);
+
+//pixmap bison_1(x=animal.x,y=animal.y,filename="please.bmp",drawing_order=2);
+pixmap tree_1(x=100,y=200,filename="tree.bmp",drawing_order=0);
+pixmap tree_2(x=400,y=140,filename="tree.bmp",drawing_order=0);
+pixmap tree_3(x=100,y=400,filename="tree.bmp",drawing_order=0);
+pixmap photo(x=window_width/2,y=window_height/2,filename="text.bmp",drawing_order=1);
+<<<<<<< HEAD
+rectangle animal(x=random(200)+100,y=random(200)+100,h=animal_h,w=animal_w,animation_block=move_animal,drawing_order=1,visible=0);
+pixmap bison_1(x=animal.x,y=animal.y,filename="please.bmp",visible=1,drawing_order=2);
+pixmap dead_bison_1(x=bison_1.x,y=bison_1.y,visible=0,filename="dead_bison.bmp");
+=======
+pixmap dead_bison(filename="dead_bison.bmp");
+
+rectangle animal(x=random(200)+100,y=random(200)+100,h=animal_h,w=animal_w,animation_block=move_animal,drawing_order=1,visible=0);
+pixmap bison_1(x=animal.x,y=animal.y,filename="please.bmp",drawing_order=2,red=1,blue=0,green=1);
+>>>>>>> 42e8862e30ebd42ceb651c772a4494f2729ce6de
+
+rectangle person(x=window_width/2,y=window_height/2,h=person_height,w=person_width,drawing_order=1,visible=0);
+circle bullet(radius=bullet_radius,x=person.x,y=person.y, animation_block=shoot, visible=1,drawing_order=1);
+
+animation shoot(circle bullet_time){
+if(dir==1 && fire==1)
+	bullet_time.x-=10;
+else if (dir==2&&fire==1)
+	bullet_time.y+=10;
+else if(dir==3&&fire==1)
+	bullet_time.x+=10;
+else if (dir==4&&fire==1){
+	bullet_time.y-=10;
+}
+if(bullet_time.x>=animal.x && bullet_time.x<=animal.x+animal.w && bullet_time.visible==1)
+	if(bullet_time.y>=animal.y && bullet_time.y<=animal.y+animal.h){
+ 		bullet_time.visible=0;	
+		bison_1.visible=0;
+		dead_bison_1.visible=1;
+		//remember to make the actual image not show up.
+	}
+}
+
+animation move_animal(rectangle animals){
+if(random(2)&&bison_1.visible==1){
+	animals.x+=random(7);
+	bison_1.x+=random(7);
+	dead_bison_1.x+=random(7);
+} else if(bison_1.visible==1){
+	animals.x-=random(7);
+	bison_1.x-=random(7);
+	dead_bison_1.x-=random(7);
+
+}
+if(random(2)&&bison_1.visible==1){
+	animals.y+=random(7);
+	bison_1.y+=random(7);
+	dead_bison_1.y+=random(7);
+
+} else if (bison_1.visible==1){
+	animals.y-=random(7);
+	bison_1.y-=random(7);
+	dead_bison_1.y-=random(7);
+
+}
+}
+
+on leftarrow{
+	dir=1;
+	facing_direction=3;
+	person.x-=movement;
+	bullet.x-=movement;
+	photo.x-=movement;
+}
+
+on rightarrow{
+	dir=3;
+	facing_direction=1;
+	person.x+=movement;
+	bullet.x+=movement;
+	photo.x+=movement;
+}
+
+on downarrow{
+	dir=4;
+	facing_direction=2;
+	person.y-=movement;
+	bullet.y-=movement;
+	photo.y-=movement;
+}
+
+on uparrow{
+	dir=2;
+	facing_direction=0;
+	person.y+=movement;
+	bullet.y+=movement;
+	photo.y+=movement;
+}
+
+on space{
+	fire++;
+	bullet.visible=1;
+}

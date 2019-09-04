@@ -1,0 +1,34 @@
+int window_width=1000;
+int window_height=1000;
+
+int ball_size=20;
+int move_thing=20;
+//pixmap cutie(x=20,y=20,filename="work.bmp");
+
+forward animation ball_anime(circle object);
+
+circle cir1(radius=ball_size,animation_block=ball_anime,x=random(500),y=random(500));
+
+rectangle rec(x=500,y=20,w=80,h=10);
+
+animation ball_anime(circle object){
+	if(object.x<=0||object.x>=window_width-ball_size){
+				
+}
+
+
+on leftarrow{
+	rec.x-=move_thing;	
+}
+
+on rightarrow{
+	rec.x+=move_thing;
+}
+
+on uparrow{
+
+}
+
+on downarrow{
+
+}
